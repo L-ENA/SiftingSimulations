@@ -1,0 +1,118 @@
+
+
+from openai import OpenAI
+import pandas as pd
+import io
+from sklearn.metrics import classification_report
+import pandas as pd
+
+def my_eval(inpath):
+  df=pd.read_csv(inpath)
+  print(classification_report(df["label"], df["prediction"]))#or change colnames if needed
+
+# Press the green button in the gutter to run the script.
+if __name__ == '__main__':
+
+
+    filename = r"H:\Downloads\example.csv"
+
+
+
+    #################################################################Authentication
+    print("Using API key to authenticate..")
+    try:
+        OPENAI_API_KEY = #Your key here!!!!!!!!!!!
+        client = OpenAI(
+            api_key=OPENAI_API_KEY
+        )
+
+    except Exception as e:
+        # unknown error
+        print("Error authenticating API key")
+        raise e
+    ###################################################Testing if it works
+    # ask ChatGPT
+
+    text = "How many fingers does a human hand have?"
+    print("Testing API by asking: {}".format(text))
+
+    completion = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "user", "content": '%s' % text}
+        ]
+    )
+
+    openai_response = completion.choices[0].message.content
+    print(openai_response)
+    #
+    ######upload a file
+
+
+    try:
+        df = pd.read_csv(filename, encoding='utf-8').fillna("")
+        enc='utf-8'
+    except:
+        df = pd.read_csv(filename, encoding='windows-1252').fillna("")
+        enc = 'windows-1252'
+
+    ###############some params
+    seed = 5
+    ########################shuffel and split into dev and test
+    #print(df["label"].value_counts())
+    #print(df["decision"].value_counts())
+    print(df.columns)
+    df = df.sample(frac=1, random_state=seed)  # shuffle and reindex
+    df.reset_index(drop='True', inplace=True)
+    ################ask GPT stuff about each row of data
+    predictions = []
+    justifications = []
+    for i, row in df.iterrows():
+
+        ####OLD######ti_abs_key="{} {} {}".format(row["Title"], row["Abstract"],row["Keywords"])
+        ti_abs_key = "{} {}".format(row["title"], row["fulltext"]).strip()
+
+        # prompt = "You are a researcher screening articles for inclusion for a systematic review. The inclusion criteria are the following: Any article that describes a method to automatically extract data, automatically label sentences, or does extractive summarisation of study characteristics of interest to systematic reviews in health. The included references describe data being extracted from clinical trials, epidemiologic studies, diagnostic accuracy studies, or other peer-reviewed literature related to evidence-based medicine. The automatically extracted characteristics can be population, intervention, outcomes or any other characteristic such as age, number of participants, and so on. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 2-sentence justification. Here is the title and abstract of the article: {}".format(
+        #     ti_abs_key)
+        prompt = "You are a researcher screening news articles for inclusion in a literature analysis. The inclusion criteria are the following: Any article that describes a newly developed or upcoming health screening method or campaign for the early detection of diseases. Screening tests can be diagnostic; to detect cancer, dementia, HPV, or any other disease and health condition within a population. Screening methods may be offered or evaluated based on a whole population or people of selected age groups and locations. Any method, such as at-home, point of care, AI-supported, analysis of biomarkers and genes, or other methods are of interest, as long as they aim to detect diseases early. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the article: {}".format(
+            ti_abs_key)
+        # prompt = "You are a researcher screening news articles for inclusion in a literature analysis. The inclusion criteria are the following: Any article that describes a healthcare related technology using or quantum applications. This includes quantum computing and quantum sensing applications specifically within the healthcare sector. Technologies may also be using quantum mechanics such as superposition, entanglement, and interference. The aim of the technology should be to support healthcare or life sciences, including but not limited to drug discovery, health screening, diagnostic tools, disease detection, monitoring, assessment and prediction. Any technology utilising quantum principles, mechanics or computing with the intent of detecting or treating diseases is within the remit. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the article: {}".format(
+        #     ti_abs_key)
+        # prompt = "You are a researcher screening references and clinical trial registry entries for inclusion in a literature analysis. The inclusion criteria are the following: Any reference that describes wearables used on humans, for prevention, diagnosis, prognosis, or treatment response of health conditions such as diseases, impairments, or disability. Devices worn by human subjects must be wearable, eg. biosensors worn on the body or attached to clothing, or in case of implants, worn invasively. Examples of wearables include, but are not limited to, smart watches, tattoos, lenses, glasses, earbuds, necklaces, smart patches, smart bracelets/bands, smart rings and wearable robots. Included reference should describe wearables being tested for health-relevant functions such as  remote monitoring of vital signs, support of rehabilitation, or chronic disease management. Exclude all references describing review articles, multiple conference proceedings, protocols, software development, materials development, VR and immersive technology, and other papers reporting no results on wearables on humans. Answer YES if the article is relevant to the inclusion criteria or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the article: {}".format(
+        #     ti_abs_key)
+
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "user", "content": '%s' % prompt}
+            ]
+        )
+        openai_response = completion.choices[0].message.content
+        if openai_response.startswith("YES") or openai_response.startswith("**YES**") or "YES" in openai_response[:10]:
+            predictions.append(1)
+        else:
+            predictions.append(0)
+        justifications.append(openai_response.replace("\n", " ").replace("  ", " "))
+        print(str(i + 1) + ": " + openai_response)
+        print("------------")
+        if i % 100 == 0:
+            print("------BACKUP PREDICTIONS------")
+            ndf = pd.DataFrame()
+            ndf["prediction"] = predictions
+            ndf["Justification"] = justifications
+            ndf.to_csv("backup.csv", encoding=enc, index=False)
+
+    print("FINAL PREDICTIONS")
+    # [print(p) for p in predictions]
+
+    df["LLM alone"] = predictions
+    df["LLM Justification"] = justifications
+    df.to_csv("backup.csv", index=False, encoding=enc)
+
+
+    df.to_csv("C:\\Users\\c1049033\\PycharmProjects\\ncl_medx\\data\\LLM predictions\\{}".format(filename.split("\\")[-1]), index=False, encoding=enc)
+
+    # from sklearn.metrics import classification_report
+    #
+    # print(classification_report(df["label"], df["LLM alone"]))
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
