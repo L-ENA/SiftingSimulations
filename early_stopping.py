@@ -24,9 +24,9 @@ for col in qrels.columns:
     seen_documents=qrels[col]
     total_incl = sum(seen_documents)
 
-    my_h0=retrospective_h0(seen_documents, qrels.shape[0], batch_size=500, recall_target=0.95)
-    my_h01 = retrospective_h0(seen_documents, qrels.shape[0], batch_size=500, recall_target=0.95, bias=1.5)
-    my_h02=retrospective_h0(seen_documents, qrels.shape[0], batch_size=500, recall_target=0.95, bias=2)
+    my_h0=retrospective_h0(seen_documents, qrels.shape[0], batch_size=50, recall_target=0.95)
+    my_h01 = retrospective_h0(seen_documents, qrels.shape[0], batch_size=50, recall_target=0.95, bias=1.5)
+    my_h02=retrospective_h0(seen_documents, qrels.shape[0], batch_size=50, recall_target=0.95, bias=2)
 
     work_saved.append(1-(my_h0['batch_sizes'][-1]/qrels.shape[0]))
     discoveredAtstop = sum(seen_documents[:my_h0['batch_sizes'][-1]])
