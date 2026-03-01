@@ -33,9 +33,6 @@ class BaseClassifier:
 
         self.lemma=WordNetLemmatizer()
         self.stopwords=stopwords.words('english')
-
-        self.weights_path=self._make_outdir(folder_name="weights")#create output data folders for each specific model
-        self.results_path=self._make_outdir(folder_name="results")
         self.model_field_name=""
 
 

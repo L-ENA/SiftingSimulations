@@ -11,18 +11,30 @@ if __name__ == '__main__':
 
     random_states=range(15)
     
-    data = pd.read_csv(r"C:\Users\c1049033\PycharmProjects\ncl_medx\data\datasets\full_mined_labelled.csv").fillna("")
-    data['label']=data["label"]#change if the input spreadsheet has data elsewhere. There always needs to be a 'label' column with binary labels
+    # data = pd.read_csv(r"data\LLM_predictions\AI Technologies.csv").fillna("")
+    # data['label']=data["label"]#change if the input spreadsheet has data elsewhere. There always needs to be a 'label' column with binary labels
+    # dsname="AI Technologies"
+    # myfield="ScientificTitle"#the text on which we run simulation
+    # mymodel="Neural"
+    # data_name="LLM_{}_{}_{}".format(dsname,myfield, mymodel)
 
+    # data = pd.read_csv(r"data\LLM_predictions\GenAI Technologies 1 Trials.csv").fillna("")
+    # data['label']=data["label"]#change if the input spreadsheet has data elsewhere. There always needs to be a 'label' column with binary labels
+    # dsname="GenAI Technologies 1 Trials"
+    # myfield="tiabs"#the text on which we run simulation
+    # mymodel="Neural"
+    # data_name="LLM_{}_{}_{}".format(dsname,myfield, mymodel)
+
+    data = pd.read_csv(r"data\LLM_predictions\mrc_labelled.csv").fillna("")
+    data['label']=data["label"]#change if the input spreadsheet has data elsewhere. There always needs to be a 'label' column with binary labels
+    dsname="MRC"
+    myfield="tiabs"#the text on which we run simulation
+    mymodel="Neural"
+    data_name="LLM_{}_{}_{}".format(dsname,myfield, mymodel)
+
+    
     # data["tiabs"] = data["title"] + " " + data["fulltext"][:2000]#merge title abstract if needed and set the myfield variable to point to it
     # myfield="tiabs"
-
-
-    myfield="ScientificTitle"#the text on which we run simulation
-
-    mymodel="Neural"
-
-    data_name="Demo_{}_{}".format(myfield, mymodel)
 
 
 
@@ -35,6 +47,7 @@ if __name__ == '__main__':
     summary_df=pd.DataFrame()
     steps_df = pd.DataFrame()
     for seed in random_states:
+        print("Running simulation with random seed {}".format(seed))
         data = data.sample(frac=1, random_state=seed)
         incls=data.index[data['label'] == 1].tolist()
         random.seed(seed)
@@ -59,15 +72,21 @@ if __name__ == '__main__':
         steps_df["Results_{}".format(seed)] = fullsteps
 
     fig = px.line(summary_df, x='Screened References', y=summary_df.columns[-len(random_states):],template='simple_white')
-    fig.update_layout(legend_title_text='Runs')
+    fig.update_layout(legend_title_text='Runs', title=data_name)
     fig.show()
+    
+    # Save gain curve plot
+    gaincurve_dir = "data//gaincurves//LLM"
+    os.makedirs(gaincurve_dir, exist_ok=True)
+    fig.write_html(os.path.join(gaincurve_dir, "{}.html".format(data_name)))
+    
     summary_df.to_csv("data//stats_nruns_{}.csv".format(data_name), index=False)
     outp="data//runs//{}.csv".format(data_name)
     steps_df.to_csv(outp, index=False)
 
     
     results = do_eval(outp)
-    resp=os.path.join(r"C:\Users\c1049033\PycharmProjects\ncl_medx\data\global", "{}.csv".format(data_name))
+    resp=os.path.join(r"data//global", "{}.csv".format(data_name))
 
     results.to_csv(resp, index=False)
 
@@ -97,93 +116,6 @@ if __name__ == '__main__':
     # al.simulate_learning()
 
 
-def remit_new(simulate=False):
-    mypath = "data//UK_Calls_new.csv"
-    remits = ["Advanced Therapies"	,"Biomedical engineering"	,"Drug Therapy & medical device combination",	"Diagnostics",	"Artificial Intelligence",	"Gut health-microbiome-nutrition"]
-    for r in remits:
-        if r != "":
-            print(r)
-            data = pd.read_csv(mypath).fillna("")
-            data = data.sample(frac=1, random_state=48)
-            data.reset_index(drop=True, inplace=True)
-
-            data["label"]=0
-            data.loc[data[r] == "Y", 'label'] = 1
-            if not simulate:
-                print("reordering")
-                print(data.shape)
-                print(sum(data["label"]))
-
-                classifier = SPECTER_CLS
-                al = ActiveLearner(classifier, data, field="Summary", model_name="Neural", do_preprocess=True)
-                output = al.reorder_once()
-                output.rename(columns={"predictions": "{}_predictions_Summary".format(r.replace(" ", "_"))}, inplace=True)
-                output.to_csv(mypath, index=False)
-            else:
-                print("simulating")
-
-                data = data.drop(data[data.Include == ""].index)
-                print(data.shape)
-                print(sum(data["label"]))
-                classifier = SPECTER_CLS
-                al = ActiveLearner(classifier, data, field="Description", model_name="Neural", do_preprocess=False)
-                al.simulate_learning(r)
-
-def precompute(sents):
-    from sentence_transformers import util, SentenceTransformer
-    model_name = 'sentence-transformers/allenai-specter'
-    model = SentenceTransformer(model_name)
-
-    emb_source = model.encode(list(sents))  # get our data column
-    cos_sim = util.pytorch_cos_sim(emb_source, emb_source)  # .diagonal().tolist()#all similarities
-    return cos_sim
-
-def sort_by_remit(simulate=False):
-    mypath="H://Downloads//sonia_new.csv"
-    mycol="Category"
-    lbl="label"
-    refcol="Tiab"
-    data = pd.read_csv(mypath).fillna("")
-    txts=data[refcol]
-    print("precomputing embeddings")
-    #cosims=precompute(txts)
-
-
-    remits=data[mycol].unique()
-    print(remits)
-    # abstracts=[t[:900] for t in data["Description"]]
-    # data["abbrev"]=abstracts
-    # data.to_csv(mypath, index=False)
-
-    for r in remits:
-        if r != "":
-            print(r)
-            data = pd.read_csv(mypath).fillna("")
-            data = data.sample(frac=1, random_state=48)
-            data.reset_index(drop=True, inplace=True)
-
-            data[lbl]=0
-            data.loc[data[mycol] == r, lbl] = 1
-            if not simulate:
-                print("reordering")
-                print(data.shape)
-                print(sum(data[lbl]))
-
-                classifier = SPECTER_CLS
-                #al = ActiveLearner(classifier, data, field=refcol, model_name="Neural", do_preprocess=False, precomputed=cosims)
-                al = ActiveLearner(classifier, data, field=refcol, model_name="Neural", do_preprocess=False)
-                output = al.reorder_once()
-                output.rename(columns={"predictions": "{}_predictions_Tiab2".format(r.replace(" ", "_"))}, inplace=True)
-                output.to_csv(mypath, index=False)
-            else:
-                print("simulating")
-
-                data = data.drop(data[data[mycol] == ""].index)
-                print(data.shape)
-                print(sum(data[lbl]))
-                classifier = SPECTER_CLS
-                al = ActiveLearner(classifier, data, field="Title", model_name="Neural", do_preprocess=True)
-                al.simulate_learning(r)
 
 
 #sort_by_remit(simulate=False)

@@ -13,6 +13,7 @@ class ActiveLearner:
         self.precomputed=precomputed
         self.all_data=data
         self.all_data["discovered_labels"]=""#the screened references and discovered gold-standard labels
+        self.all_data["discovered_labels"] = self.all_data["discovered_labels"].astype('object')
         self.all_data["predictions"] = 0
         #self.all_data= self.all_data.sample(frac=1, random_state=42)
         self.field=field[:500]
