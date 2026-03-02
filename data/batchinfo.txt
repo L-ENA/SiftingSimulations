@@ -1,0 +1,124 @@
+Polling for batch completion (this may take a while)...
+Batch batch_69a5490b1ff48190b718811625992e85 status: validating
+  Completed: 0, Failed: 0
+Batch batch_69a5490b1ff48190b718811625992e85 status: in_progress
+  Completed: 9, Failed: 0
+Batch batch_69a5490b1ff48190b718811625992e85 status: in_progress
+  Completed: 9, Failed: 0
+Batch batch_69a5490b1ff48190b718811625992e85 status: in_progress
+  Completed: 10, Failed: 0
+Batch batch_69a5490b1ff48190b718811625992e85 status: completed
+  Completed: 11, Failed: 0
+Batch completed!
+
+Retrieving results...
+
+Processing results...
+
+Saving outputs...
+
+============================================================
+BATCH COST ANALYSIS
+============================================================
+Model: gpt-4o-mini
+Completed requests: 11
+Failed requests: 0
+Estimated input tokens: 1100
+Estimated output tokens: 550
+Input cost (USD): $0.000165
+Output cost (USD): $0.000330
+Total cost (USD): $0.000495
+
+Batch ID for retrieval: batch_69a5490b1ff48190b718811625992e85
+Save this ID if you need to retrieve results later!
+
+============================================================
+CLASSIFICATION REPORT
+============================================================
+              precision    recall  f1-score   support
+
+           0       0.80      1.00      0.89         4
+           1       1.00      0.86      0.92         7
+
+    accuracy                           0.91        11
+   macro avg       0.90      0.93      0.91        11
+weighted avg       0.93      0.91      0.91        11
+
+
+Cleaning up...
+✓ Batch processing complete for PFOA_test
+
+
+============================================================
+BATCH API PROCESSING
+Selected Model: gpt-5-mini
+============================================================
+
+
+
+============================================================
+Running batch API for dataset: BPA
+============================================================
+
+Dataset shape: (13, 10)
+Columns: ['id', 'pmid', 'title', 'abstract', 'year', 'authors', 'journal', 'MeSH Heading', 'MeSH Supplementary Chemicals', 'label']
+
+Creating batch requests...
+Saved 13 requests to batch_requests_BPA.jsonl
+
+Submitting batch...
+File uploaded with ID: file-BSAxRghG6gbRvzcMtt92Qk
+Batch submitted with ID: batch_69a54c3f91688190b2a265784e559be5
+Batch metadata saved to batch_metadata.json
+
+Polling for batch completion (this may take a while)...
+Batch batch_69a54c3f91688190b2a265784e559be5 status: validating
+  Completed: 0, Failed: 0
+Batch batch_69a54c3f91688190b2a265784e559be5 status: in_progress
+  Completed: 0, Failed: 0
+
+Model: gpt-5-mini
+Completed requests: 6328
+Failed requests: 0
+Estimated input tokens: 632800
+Estimated output tokens: 316400
+Input cost (USD): $0.047460
+Output cost (USD): $0.094920
+Total cost (USD): $0.142380
+
+Batch ID for retrieval: batch_69a54cd1504c8190be8008b9ae52179c
+Save this ID if you need to retrieve results later!
+
+============================================================
+CLASSIFICATION REPORT
+============================================================
+              precision    recall  f1-score   support
+
+           0       1.00      0.79      0.88      6233
+           1       0.07      1.00      0.13        95
+
+    accuracy                           0.79      6328
+   macro avg       0.53      0.89      0.50      6328
+weighted avg       0.99      0.79      0.87      6328
+
+
+============================================================
+Running batch API for dataset: Transgenerational
+============================================================
+
+Dataset shape: (48632, 10)
+Columns: ['id', 'title', 'abstract', 'year', 'authors', 'journal', 'pmid', 'MeSH Heading', 'MeSH Supplementary Chemicals', 'label']
+
+Creating batch requests...
+Saved 48632 requests to batch_requests_Transgenerational.jsonl
+
+Submitting batch...
+File uploaded with ID: file-WehwJRGESPHyiFLfNvA5Qo
+Batch submitted with ID: batch_69a556fca15c8190a0bedab784ecc9ce
+Batch metadata saved to batch_metadata.json
+
+Polling for batch completion (this may take a while)...
+Batch batch_69a556fca15c8190a0bedab784ecc9ce status: validating
+  Completed: 0, Failed: 0
+Batch batch_69a556fca15c8190a0bedab784ecc9ce status: in_progress
+  Completed: 0, Failed: 0

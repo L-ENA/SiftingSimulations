@@ -20,3 +20,15 @@ FINAL PREDICTIONS
     accuracy                           0.89      1141
    macro avg       0.74      0.63      0.67      1141
 weighted avg       0.87      0.89      0.87      1141
+
+
+Submitting batch...
+File uploaded with ID: file-UwfpwstVXaiGnVTSMgLguF
+Batch submitted with ID: batch_69a54cd1504c8190be8008b9ae52179c
+Batch metadata saved to batch_metadata.json
+
+Polling for batch completion (this may take a while)...
+Batch batch_69a54cd1504c8190be8008b9ae52179c status: validating
+  Completed: 0, Failed: 0
+Batch batch_69a54cd1504c8190be8008b9ae52179c status: in_progress
+  Completed: 0, Failed: 0

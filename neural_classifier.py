@@ -18,7 +18,9 @@ class SPECTER_CLS(BaseClassifier):
         self.model = SentenceTransformer(self.model_name, device='cuda')
 
         if self.precomputed== "":
-            self.emb_source = self.model.encode(list(current_data[self.model_field_name]), device='cuda')  # get our data column
+            # Ensure we always pass clean strings to the encoder (no floats/NaNs)
+            texts = ["" if pd.isna(t) else str(t) for t in current_data[self.model_field_name]]
+            self.emb_source = self.model.encode(texts, device='cuda')  # get our data column
             self.cos_sim = util.pytorch_cos_sim(self.emb_source, self.emb_source)  # .diagonal().tolist()#all similarities
         else:
             print("skipping embedding again")
@@ -43,8 +45,16 @@ class SPECTER_CLS(BaseClassifier):
         print("ML prediction")
         currents = current_data[current_data["discovered_labels"] != ""]
 
+        # If we have no screened items yet, we cannot train an ML model.
+        # Avoid calling TF-IDF / GridSearchCV with 0 samples.
+        if currents.shape[0] == 0:
+            print("No discovered labels available for ML model; returning zeros.")
+            return [0.0] * len(current_data["backup_processed"])
+        
         c_in = currents[currents["discovered_labels"] == 1]
         c_out = currents[currents["discovered_labels"] == 0]
+        print("Currently discovered {} labels and {} are includes".format(currents.shape[0], c_in.shape[0]))
+
         s = c_in.shape[0] * 3
         if c_out.shape[0] > s:
             c_out = c_out.sample(n=s, random_state=48)

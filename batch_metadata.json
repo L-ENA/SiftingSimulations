@@ -1,0 +1,130 @@
+{
+  "batch_69a547de6c6881908ed098eea3a8ed0b": {
+    "batch_id": "batch_69a547de6c6881908ed098eea3a8ed0b",
+    "file_id": "file-63LHQcPBsH5SV52jVCphGp",
+    "dataset_name": "BPA_test",
+    "timestamp": "2026-03-02T08:18:38.356456",
+    "model": "gpt-4o-mini",
+    "managed_run_info": {
+      "dataset": "BPA_test",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 13,
+      "model": "gpt-4o-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a548ae51e8819098e2adc2f99bb07e": {
+    "batch_id": "batch_69a548ae51e8819098e2adc2f99bb07e",
+    "file_id": "file-HAEGxhR8UKMKuWpeNYEAGZ",
+    "dataset_name": "BPA_test",
+    "timestamp": "2026-03-02T08:22:05.926415",
+    "model": "gpt-4o-mini",
+    "managed_run_info": {
+      "dataset": "BPA_test",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 13,
+      "model": "gpt-4o-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a5490b1ff48190b718811625992e85": {
+    "batch_id": "batch_69a5490b1ff48190b718811625992e85",
+    "file_id": "file-FaMsPSBaqgoLw733Pu35Qb",
+    "dataset_name": "PFOA_test",
+    "timestamp": "2026-03-02T08:23:38.743632",
+    "model": "gpt-4o-mini",
+    "managed_run_info": {
+      "dataset": "PFOA_test",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 11,
+      "model": "gpt-4o-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a54c3f91688190b2a265784e559be5": {
+    "batch_id": "batch_69a54c3f91688190b2a265784e559be5",
+    "file_id": "file-BSAxRghG6gbRvzcMtt92Qk",
+    "dataset_name": "BPA",
+    "timestamp": "2026-03-02T08:37:19.164699",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "BPA",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 13,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a54cd1504c8190be8008b9ae52179c": {
+    "batch_id": "batch_69a54cd1504c8190be8008b9ae52179c",
+    "file_id": "file-UwfpwstVXaiGnVTSMgLguF",
+    "dataset_name": "PFOA",
+    "timestamp": "2026-03-02T08:39:44.935980",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "PFOA",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 6328,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a556fca15c8190a0bedab784ecc9ce": {
+    "batch_id": "batch_69a556fca15c8190a0bedab784ecc9ce",
+    "file_id": "file-WehwJRGESPHyiFLfNvA5Qo",
+    "dataset_name": "Transgenerational",
+    "timestamp": "2026-03-02T09:23:08.134923",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "Transgenerational",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 48632,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a58b7a94248190a69cec976c98e5b6": {
+    "batch_id": "batch_69a58b7a94248190a69cec976c98e5b6",
+    "file_id": "file-XWGLDy2pNjYVTL6JFRsG2j",
+    "dataset_name": "BPA",
+    "timestamp": "2026-03-02T13:07:06.238587",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "BPA",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 7700,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a5ce77713081908c5877ef51c3992d": {
+    "batch_id": "batch_69a5ce77713081908c5877ef51c3992d",
+    "file_id": "file-BeuiDMnDtVv1USNeyJJQZT",
+    "dataset_name": "Fluoride",
+    "timestamp": "2026-03-02T17:52:55.489965",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "Fluoride",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 4479,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  }
+}

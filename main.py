@@ -25,12 +25,36 @@ if __name__ == '__main__':
     # mymodel="Neural"
     # data_name="LLM_{}_{}_{}".format(dsname,myfield, mymodel)
 
-    data = pd.read_csv(r"data\LLM_predictions\mrc_labelled.csv").fillna("")
+    # data = pd.read_csv(r"data\LLM_predictions\mrc_labelled.csv").fillna("")
+    # data['label']=data["label"]#change if the input spreadsheet has data elsewhere. There always needs to be a 'label' column with binary labels
+    # dsname="MRC"
+    # myfield="tiabs"#the text on which we run simulation
+    # mymodel="Neural"
+    # data_name="LLM_{}_{}_{}".format(dsname,myfield, mymodel)
+
+    # data = pd.read_csv(r"data\LLM_predictions\SWIFT_PFOA_clean.csv").fillna("")
+    # data['label']=data["label"]#change if the input spreadsheet has data elsewhere. There always needs to be a 'label' column with binary labels
+    # dsname="PFOA"
+    # myfield="tiabs"#the text on which we run simulation
+    # mymodel="Neural"
+    # data_name="LLM_{}_{}_{}".format(dsname,myfield, mymodel)
+    # # Build tiabs as clean strings (title + first 2000 chars of abstract)
+    # data["tiabs"] = (
+    #     data["title"].astype(str).fillna("") + " " +
+    #     data["abstract"].astype(str).fillna("").str[:3000]
+    # )
+
+    data = pd.read_csv(r"data\LLM_predictions\SWIFT_Transgenerational_clean.csv").fillna("")
     data['label']=data["label"]#change if the input spreadsheet has data elsewhere. There always needs to be a 'label' column with binary labels
-    dsname="MRC"
+    dsname="Transgenerational"
     myfield="tiabs"#the text on which we run simulation
     mymodel="Neural"
     data_name="LLM_{}_{}_{}".format(dsname,myfield, mymodel)
+    # Build tiabs as clean strings (title + first 2000 chars of abstract)
+    data["tiabs"] = (
+        data["title"].astype(str).fillna("") + " " +
+        data["abstract"].astype(str).fillna("").str[:3000]
+    )
 
     
     # data["tiabs"] = data["title"] + " " + data["fulltext"][:2000]#merge title abstract if needed and set the myfield variable to point to it
@@ -51,7 +75,7 @@ if __name__ == '__main__':
         data = data.sample(frac=1, random_state=seed)
         incls=data.index[data['label'] == 1].tolist()
         random.seed(seed)
-        starters=random.sample(incls, 5)#n starting seeds
+        starters=random.sample(incls, 1)#n starting seeds
         print(starters)
         sort_df=[0 if i not in starters else 1 for i in data.index]
         data['temp']=sort_df
@@ -61,7 +85,7 @@ if __name__ == '__main__':
         print(data["label"][:2])
 
 
-        al = ActiveLearner(classifier, data, field=myfield, model_name=mymodel, do_preprocess=False)
+        al = ActiveLearner(classifier, data, field=myfield, model_name=mymodel, do_preprocess=False, time_to_retrain=50)
         #al = ActiveLearner(classifier, data, field=myfield, model_name=mymodel, do_preprocess=True)
 
         my_df, fullsteps=al.simulate_learning(plottitle="AI simulation")#ecample for simulation, can still be used to provide fancy plot to the user to see how the model would have reacted tto their data in active learning scenario

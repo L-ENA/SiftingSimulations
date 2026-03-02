@@ -1,0 +1,2 @@
+completed_requests,failed_requests,estimated_input_tokens,estimated_output_tokens,input_cost_usd,output_cost_usd,total_cost_usd
+7700,0,770000,385000,0.057749999999999996,0.11549999999999999,0.17325

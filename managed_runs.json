@@ -69,6 +69,48 @@
         "abstract_col":"Fulltext",
         "label_col":"label",
         "prompt":"You are a researcher screening scientific articles for inclusion in a literature analysis. The INCLUSION criteria are the following: Include records describing research populations comprising women or pregnant people (antenatal to 6–8 weeks postnatal) using UK maternity services, or maternity healthcare professionals. The record should describe interventions that aim to improve care or practice; interventions designed to improve maternity services (e.g. training, telehealth, models of care, educational or postpartum service modifications, breastfeeding support, or care following baby loss); measuring at least one eligible outcome  which may be related to physical or mental health, adverse events, laboratory or birth outcomes, service improvement, or feasibility. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the record:"
+    },
+    "BPA": {
+        "path":"data\\datasets\\SWIFT_BPA_clean.csv",
+        "title_col":"title",
+        "abstract_col":"abstract",
+        "label_col":"label",
+        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure bisphenol A (BPA) or its analogues, specifically 'Bisphenol acetone','Diphenylolpropane', 'p,p-Isopropylidenebisphenol', '2,2-Bis(4-hydroxyphenyl)propane', or '2,2-Di(4-phenylol)propane'. Included papers should report any outcome measure related to obesity, and study design should include human, animal, or in vitro studies. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
+    },
+    "PFOA": {
+        "path":"data\\datasets\\SWIFT_PFOA_clean.csv",
+        "title_col":"title",
+        "abstract_col":"abstract",
+        "label_col":"label",
+        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure perfluorooctanoic acid (PFOA) or perfluorooctane sulfonate (PFOS) or their analogues ('C8', 'Perfluorooctanoate', 'PFO', 'Perfluorocaprylic acid', 'C8-PFCA', 'FC-143', 'F-n-octanoic acid', 'perfluorooctanesulfonate'). Included papers should use any human, animal, or in vitro study design and research immunotoxicity, toxicity, or immune-related health effects. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
+    },
+    "Fluoride": {
+        "path":"data\\datasets\\SWIFT_fluoride_clean.csv",
+        "title_col":"title",
+        "abstract_col":"abstract",
+        "label_col":"label",
+        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure fluoride and its analogues. Included papers should report any outcome measure related to neurotoxicity, and the study should be an animal study. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
+    },
+    "Transgenerational": {
+        "path":"data\\datasets\\SWIFT_Transgenerational_clean.csv",
+        "title_col":"title",
+        "abstract_col":"abstract",
+        "label_col":"label",
+        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review about transgenerational health effects of exposures, researching how exposures can lead to health outcomes in the next generations. The INCLUSION criteria are the following: records describing research with transgenerational study design. Included papers should report research on human or animal (whole organism) without restriction based on age, sex, or life stage at exposure or outcome assessment. It should report exposure/stressors and the record will be relevant if it's study design is transgenerational in nature. EXCLUDE a record if there is no indication of a transgenerational study design or if it solely focuses on the inheritance of diseases without an exposure. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
+    },
+    "BPA_test": {
+        "path":"data\\datasets\\batch_test_BPA.csv",
+        "title_col":"title",
+        "abstract_col":"abstract",
+        "label_col":"label",
+        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure bisphenol A (BPA) or its analogues, specifically 'Bisphenol acetone','Diphenylolpropane', 'p,p-Isopropylidenebisphenol', '2,2-Bis(4-hydroxyphenyl)propane', or '2,2-Di(4-phenylol)propane'. Included papers should report any outcome measure related to obesity, and study design should include human, animal, or in vitro studies. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
+    },
+    "PFOA_test": {
+        "path":"data\\datasets\\batch_test_PFOA.csv",
+        "title_col":"title",
+        "abstract_col":"abstract",
+        "label_col":"label",
+        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure perfluorooctanoic acid (PFOA) or perfluorooctane sulfonate (PFOS) or their analogues ('C8', 'Perfluorooctanoate', 'PFO', 'Perfluorocaprylic acid', 'C8-PFCA', 'FC-143', 'F-n-octanoic acid', 'perfluorooctanesulfonate'). Included papers should use any human, animal, or in vitro study design and research immunotoxicity, toxicity, or immune-related health effects. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
     }
 
 }
