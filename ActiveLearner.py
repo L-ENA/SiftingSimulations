@@ -2,7 +2,7 @@ import pandas as pd
 import plotly.express as px
 
 class ActiveLearner:
-    def __init__(self,classifier,data,field="ScientificTitle", time_to_retrain=10,model_name="regex", do_preprocess=True, precomputed=""):
+    def __init__(self,classifier,data,field="ScientificTitle", time_to_retrain=10,model_name="regex", do_preprocess=True, precomputed="", LLM_weight=0.33, LLM_col_name="LLM alone"):
         """
         Taking a classifier instance from one of the classifer architectures in classifiers.py, and a dataset
         :param classifier:
@@ -17,6 +17,13 @@ class ActiveLearner:
         self.all_data["predictions"] = 0
         #self.all_data= self.all_data.sample(frac=1, random_state=42)
         self.field=field[:500]
+
+        self.LLM_col_name=LLM_col_name
+        if self.LLM_col_name in self.all_data.columns:
+            try:
+                self.all_data[self.LLM_col_name]=self.all_data[self.LLM_col_name]*LLM_weight#reduce weight by factor
+            except:
+                print("LLM predictions column found but failed to include it in predictions")
 
         ########################plotting and eval
         self.precisions=[]
@@ -55,9 +62,9 @@ class ActiveLearner:
     def reorder(self):
         print("Reordering")
         #print(self.all_data["predictions"])
-        if "LLM alone" in self.all_data.columns:
+        if self.LLM_col_name in self.all_data.columns:
             try:
-                self.all_data['predictions']=self.all_data['LLM alone'] + self.all_data['predictions']
+                self.all_data['predictions']=self.all_data[self.LLM_col_name] + self.all_data['predictions']
             except:
                 print("LLM inclusion failed")
 

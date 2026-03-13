@@ -24,8 +24,8 @@ if __name__ == '__main__':
     managed_runs=json.load(open(r"managed_runs.json", "r"))#this is a json file where you can specify the input files you want to run the LLM evaluation on, the prompts and other variables
     #my_dataset="AI Technologies.csv"
     #my_dataset="GenAI Technologies 1 Trials"
-    my_dataset="MRC"
-    done_data=["BPA", "PFOA", "Fluoride", "Transgenerational"]
+    #my_dataset="MRC"
+    done_data=["BPA"]
 
 
     for my_dataset in managed_runs.keys():
@@ -33,6 +33,7 @@ if __name__ == '__main__':
             pass
         else:
             print("Running LLM evaluation for dataset {}".format(my_dataset))
+            
             filename = managed_runs[my_dataset]["path"]
             ti=managed_runs[my_dataset]["title_col"]
             ab=managed_runs[my_dataset]["abstract_col"]
@@ -82,13 +83,20 @@ if __name__ == '__main__':
             #print(df["label"].value_counts())
             #print(df["decision"].value_counts())
             print(df.columns)
+            print(df.shape)
             df = df.sample(frac=1, random_state=seed)  # shuffle and reindex
             df.reset_index(drop='True', inplace=True)
+
+            backupdf=pd.read_csv("backup_BPA.csv", encoding=enc)
             ################ask GPT stuff about each row of data
             predictions = []
             justifications = []
             for i, row in df.iterrows():
-
+                if i in backupdf.index:
+                    predictions.append(backupdf.at[i, "prediction"])
+                    justifications.append(backupdf.at[i, "Justification"])
+                    print("Row {} already done, skipping..".format(i))
+                    continue
                 ####OLD######ti_abs_key="{} {} {}".format(row["Title"], row["Abstract"],row["Keywords"])
                 ti_text=row.get(ti, "")
                 ab_text=row.get(ab, "")
@@ -102,7 +110,7 @@ if __name__ == '__main__':
                     ]
                 )
                 openai_response = completion.choices[0].message.content
-                if openai_response.startswith("YES") or openai_response.startswith("**YES**") or "YES" in openai_response[:10] or (len(ab_text)< 50 and ab != ""):#here an automated positive response is added if an abstract column was provided but if it's text is less than 50 characters long. If no abstract column is provided then classification is done as normal based on the title alone. This is because in some cases, such as with clinical trial registry entries, the abstract may be missing or very short, and we want to avoid false negatives in those cases.
+                if openai_response.lower().startswith("yes") or openai_response.lower().startswith("**YES**") or "YES" in openai_response.lower()[:10] or (len(ab_text)< 50 and ab != ""):#here an automated positive response is added if an abstract column was provided but if it's text is less than 50 characters long. If no abstract column is provided then classification is done as normal based on the title alone. This is because in some cases, such as with clinical trial registry entries, the abstract may be missing or very short, and we want to avoid false negatives in those cases.
                     predictions.append(1)
                 else:
                     predictions.append(0)

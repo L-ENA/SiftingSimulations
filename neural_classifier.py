@@ -13,18 +13,33 @@ class SPECTER_CLS(BaseClassifier):
 
 
     def update_field(self, current_data):
+        """Prepare cosine similarity matrix.
+
+        If a precomputed matrix was supplied (indexed by global_id), reuse it
+        directly; otherwise compute embeddings and similarities for the current
+        dataset order.
+        """
         print("Loading and making similarity calculations...")
+
+        # If we already have a precomputed global cosine similarity matrix,
+        # just attach it. This matrix is assumed to be aligned with a
+        # stable `global_id` index (0..N-1), so it can be shared across
+        # different shufflings of the dataframe.
+        if self.precomputed not in ["", None]:
+            print("Using precomputed SPECTER cosine similarity matrix.")
+            self.cos_sim = self.precomputed
+            self.was_prepared = True
+            return
+
+        # Fallback: compute embeddings / cosine similarities for the
+        # current data order (used when no precomputed matrix is given).
         self.model_name = 'sentence-transformers/allenai-specter'
         self.model = SentenceTransformer(self.model_name, device='cuda')
 
-        if self.precomputed== "":
-            # Ensure we always pass clean strings to the encoder (no floats/NaNs)
-            texts = ["" if pd.isna(t) else str(t) for t in current_data[self.model_field_name]]
-            self.emb_source = self.model.encode(texts, device='cuda')  # get our data column
-            self.cos_sim = util.pytorch_cos_sim(self.emb_source, self.emb_source)  # .diagonal().tolist()#all similarities
-        else:
-            print("skipping embedding again")
-            self.cos_sim=self.precomputed
+        # Ensure we always pass clean strings to the encoder (no floats/NaNs)
+        texts = ["" if pd.isna(t) else str(t) for t in current_data[self.model_field_name]]
+        self.emb_source = self.model.encode(texts, device='cuda')  # get our data column
+        self.cos_sim = util.pytorch_cos_sim(self.emb_source, self.emb_source)  # all similarities
 
         self.was_prepared = True
 
@@ -94,30 +109,39 @@ class SPECTER_CLS(BaseClassifier):
         if self.retrain_counter % 5 != 0:#4 out of 5 runs are using the standard AIDOC classifier here
             print("Predicting. Currently discovered {} labels".format(
                 len(list(current_data[current_data["discovered_labels"] != ""].index.values))))
-            # print('Predicting {} data points using <{}> model'.format(len(self.preprocessed),self.model_name))
-            self.predictions = []
-            idx = list(current_data[current_data["discovered_labels"] == 1].index.values)  # filter positive labels and get their index values as list
-            if len(idx) >= 10:
-                idx_pos = random.choices(idx, k=10)
-            else:
-                idx_pos = idx
-            #print("Found {} labels, predicting based on indexes: {}".format(len(idx),idx_pos))  # print first five as sanity check
-            #print(idx)
+            # Ensure cosine similarity is prepared (uses precomputed if given)
+            if not hasattr(self, "cos_sim") or self.cos_sim is None:
+                self.update_field(current_data)
 
-            try:
-                sims = calculate_similarity_single_sent(idx_pos, self.cos_sim)#directly calculate similarities. This will fail first time if the embeddings are empty
-                sci_title_sim = []
+            self.predictions = []
+
+            # Use stable global_id values for mapping into the global
+            # cosine similarity matrix so that shuffling the dataframe
+            # for different seeds does not break the mapping.
+            if "global_id" in current_data.columns:
+                idx_all = list(current_data[current_data["discovered_labels"] == 1]["global_id"])
+            else:
+                # Fallback: behave as before, relying on positional index.
+                idx_all = list(current_data[current_data["discovered_labels"] == 1].index.values)
+
+            if len(idx_all) >= 10:
+                idx_pos = random.choices(idx_all, k=10)
+            else:
+                idx_pos = idx_all
+
+            sims = calculate_similarity_single_sent(idx_pos, self.cos_sim)
+
+            # Map similarities back to the current dataframe order. If we
+            # have a global_id column, we index the global similarity list
+            # with it; otherwise we fall back to positional indexing.
+            sci_title_sim = []
+            if "global_id" in current_data.columns:
+                for _, row in current_data.iterrows():
+                    gid = row["global_id"]
+                    sci_title_sim.append(sims[gid])
+            else:
                 for data_index in current_data.index.values:
                     sci_title_sim.append(sims[data_index])
-                #print(sci_title_sim)
-            except:
-                #print("Resetting an dpreparing data...")
-                self.my_idx = idx_pos
-                current_data.reset_index(drop=True, inplace=True)
-                self.update_field(current_data)
-                sci_title_sim = calculate_similarity_single_sent(self.my_idx, self.cos_sim)
-                #print(sci_title_sim)
-                #print(current_data.index.values[:10])
 
             return sci_title_sim
         else:

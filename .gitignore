@@ -1,1 +1,8 @@
 .env
+data/*
+batch_requests*.jsonl
+backup*.csv
+managed_runs_all.json
+.vscode/*
+.idea/*
+__pycache__/*

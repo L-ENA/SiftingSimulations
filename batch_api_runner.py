@@ -122,7 +122,7 @@ def submit_batch(client, batch_file):
     print(f"Batch submitted with ID: {batch.id}")
     return batch.id, file_id
 
-def poll_batch_completion(client, batch_id, check_interval=30, max_wait_time=10000):
+def poll_batch_completion(client, batch_id, check_interval=60, max_wait_time=10000):
     """Poll batch status until completion"""
     start_time = time.time()
     while True:
@@ -281,8 +281,8 @@ if __name__ == '__main__':
     OPENAI_API_KEY = dotenv.get_key(dotenv.find_dotenv(), "API_KEY")
     client = OpenAI(api_key=OPENAI_API_KEY)
     
-    #my_dataset = "MRC"  # Change this to process different datasets
-    done_data = ["Fluoride"]
+    #my_dataset = "MRC, BPA"  # Change this to process different datasets
+    done_data = ["BPA"]
     
     print(f"\n{'='*60}")
     print(f"BATCH API PROCESSING")

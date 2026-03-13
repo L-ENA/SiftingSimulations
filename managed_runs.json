@@ -29,11 +29,11 @@
         "prompt":"You are a researcher screening scientific articles for inclusion in a literature analysis. The INCLUSION criteria are the following: Include records describing generative AI being used in a regulated medical device, digital technology, diagnostic method or device. A technology can be classified as AI if at least one of the following criterions is met: explicit AI-related terminology, documented machine learning methods or training, confirmation from secondary sources, involvement of AI-specialist collaborators, intentional data collection for AI, evaluation of existing AI systems for clinical use, or development of novel AI tools for individual-level risk assessment, diagnosis, or direct patient health impact. Usage of any type of generative AI should be explicitly mentioned within the text (e.g. generative AI, deep-learning, neural networks, generative model, adversarial networks, transformers, GPT, large-language models, reinforcement learning). EXCLUSION: records not describing methods that involve generative AI or that involve generative AI in professional training, hospital- or disaster-level system optimisation, or primary in-clinic research; patient information tools not primarily aimed at improving health outcomes; data-collection systems lacking autonomous analysis; and predictive AI models that do not generate new content. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the record:"
     },
     "MRC": {
-        "path":"data\\datasets\\mrc_labelled.csv",
+        "path":"data\\datasets\\mrc.csv",
         "title_col":"Title",
         "abstract_col":"Fulltext",
         "label_col":"label",
-        "prompt":"You are a researcher screening funding records for inclusion in a literature analysis. The INCLUSION criteria are the following: INCLUDE records describing research related to advanced medical therapies, advanced other therapies, diagnostics, drug therapy and medical devices, artificial intelligence usage, or research related to gut health, microbiome or nutrition. EXCLUDE records not related to any of these topics and records not related to health research. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the record:"
+        "prompt":"You are a researcher screening funding records for inclusion in a literature analysis. The INCLUSION criteria are the following: INCLUDE records describing research related to health or healthcare that are relevant to one or more ofthe following topics: 'Advanced medical therapies', 'Diagnostics', 'Drug/therapy AND medical device combination', 'Artificial intelligence', or 'Gut health-microbiome-nutrition'. EXCLUDE records not related to any of these topics and records not related to health-related research. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then output the relevant topic(s) if applicable and reproduce exactly  two sentences from the paper that contained the most relevant information on which basis you made the inclusion or exclusion decision. Here is the text of the record:"
     },
     "MRP": {
         "path":"data\\datasets\\mrp_sifting.csv",
@@ -42,21 +42,21 @@
         "label_col":"label",
         "prompt":"You are a researcher screening records for inclusion in a literature analysis. The INCLUSION criteria are the following: Include records describing medicines used outside their existing UK-licensed indication (including new indications, treatment pathway positioning, dose, formulation, or combinations), encompassing generics, biosimilars, on-patent and reformulated products used as monotherapy or in combination; phase I/II to III trials for rare conditions and phase II/III to III trials for non-rare and cancer indications; conducted at sites in the UK, EU, USA, Australia or Canada; sponsored by non-commercial investigators (including those with industry collaborators); and excluding COVID-19 treatment or prevention trials. EXCLUDE records describing: Products unlicensed for any indication in the UK (including new or unlicensed repurposed technologies used in combination); phase I trials and early-phase (I/II or II) trials for non-rare or cancer indications; single-site studies; commercially sponsored studies; and trials of COVID-19 treatment or prevention. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the record:"
     },
-    "Rapid Biomed Genetic Engineering .csv": {
+    "Rapid Biomed Genetic Engineering": {
         "path":"data\\datasets\\Rapid Biomed Genetic Engineering .csv",
         "title_col":"Title",
         "abstract_col":"Abstract",
         "label_col":"label",
         "prompt":"You are a researcher screening scientific articles for inclusion in a literature analysis. The INCLUSION criteria are the following: records describing emerging genetic bioengineered technologies related to health and healthcare, at any stage of developement and clinical trial phases. This also includes novel technologies and new applications of existing approaches. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the record:"
     },
-    "Rapid Biomed Tissues Devices .csv": {
+    "Rapid Biomed Tissues Devices": {
         "path":"data\\datasets\\Rapid Biomed Tissues Devices .csv",
         "title_col":"Title",
         "abstract_col":"Abstract",
         "label_col":"label",
         "prompt":"You are a researcher screening scientific articles for inclusion in a literature analysis. The INCLUSION criteria are the following: records describing emerging bioengineered tissues and medical devices technologies related to health and healthcare, at any stage of developement and clinical trial phases. This also includes novel technologies and new applications of existing approaches. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the record:"
     },
-    "Rapid Biomed TX delivery.csv": {
+    "Rapid Biomed TX delivery": {
         "path":"data\\datasets\\Rapid Biomed TX delivery.csv",
         "title_col":"Title",
         "abstract_col":"Abstract",
@@ -71,11 +71,11 @@
         "prompt":"You are a researcher screening scientific articles for inclusion in a literature analysis. The INCLUSION criteria are the following: Include records describing research populations comprising women or pregnant people (antenatal to 6–8 weeks postnatal) using UK maternity services, or maternity healthcare professionals. The record should describe interventions that aim to improve care or practice; interventions designed to improve maternity services (e.g. training, telehealth, models of care, educational or postpartum service modifications, breastfeeding support, or care following baby loss); measuring at least one eligible outcome  which may be related to physical or mental health, adverse events, laboratory or birth outcomes, service improvement, or feasibility. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then reproduce the exact context from the paper that contained the information on which basis you made the decision. Here is the text of the record:"
     },
     "BPA": {
-        "path":"data\\datasets\\SWIFT_BPA_clean.csv",
+        "path":"data\\datasets\\SWIFT_BPA_clean_0.csv",
         "title_col":"title",
         "abstract_col":"abstract",
         "label_col":"label",
-        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure bisphenol A (BPA) or its analogues, specifically 'Bisphenol acetone','Diphenylolpropane', 'p,p-Isopropylidenebisphenol', '2,2-Bis(4-hydroxyphenyl)propane', or '2,2-Di(4-phenylol)propane'. Included papers should report any outcome measure related to obesity, and study design should include human, animal, or in vitro studies. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
+        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure bisphenol A (BPA) or its analogues, specifically 'Bisphenol acetone','Diphenylolpropane', 'p,p-Isopropylidenebisphenol', '2,2-Bis(4-hydroxyphenyl)propane', or '2,2-Di(4-phenylol)propane'. Included papers should also report research on any outcomes related to obesity, related health issues such as diabetes, or mechanisms related to any hormones that are involved in reproductive or metabolic processes. Study design should include human, animal, or in vitro studies. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
     },
     "PFOA": {
         "path":"data\\datasets\\SWIFT_PFOA_clean.csv",
@@ -97,20 +97,6 @@
         "abstract_col":"abstract",
         "label_col":"label",
         "prompt":"You are a researcher screening scientific articles for inclusion in a literature review about transgenerational health effects of exposures, researching how exposures can lead to health outcomes in the next generations. The INCLUSION criteria are the following: records describing research with transgenerational study design. Included papers should report research on human or animal (whole organism) without restriction based on age, sex, or life stage at exposure or outcome assessment. It should report exposure/stressors and the record will be relevant if it's study design is transgenerational in nature. EXCLUDE a record if there is no indication of a transgenerational study design or if it solely focuses on the inheritance of diseases without an exposure. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
-    },
-    "BPA_test": {
-        "path":"data\\datasets\\batch_test_BPA.csv",
-        "title_col":"title",
-        "abstract_col":"abstract",
-        "label_col":"label",
-        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure bisphenol A (BPA) or its analogues, specifically 'Bisphenol acetone','Diphenylolpropane', 'p,p-Isopropylidenebisphenol', '2,2-Bis(4-hydroxyphenyl)propane', or '2,2-Di(4-phenylol)propane'. Included papers should report any outcome measure related to obesity, and study design should include human, animal, or in vitro studies. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
-    },
-    "PFOA_test": {
-        "path":"data\\datasets\\batch_test_PFOA.csv",
-        "title_col":"title",
-        "abstract_col":"abstract",
-        "label_col":"label",
-        "prompt":"You are a researcher screening scientific articles for inclusion in a literature review. The INCLUSION criteria are the following: records describing research with the exposure perfluorooctanoic acid (PFOA) or perfluorooctane sulfonate (PFOS) or their analogues ('C8', 'Perfluorooctanoate', 'PFO', 'Perfluorocaprylic acid', 'C8-PFCA', 'FC-143', 'F-n-octanoic acid', 'perfluorooctanesulfonate'). Included papers should use any human, animal, or in vitro study design and research immunotoxicity, toxicity, or immune-related health effects. Answer YES if the article is relevant or unclear. Answer NO if it is not. Then provide a short 1-sentence justification of your decision. Here is the text of the record:"
     }
 
 }

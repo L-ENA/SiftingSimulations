@@ -126,5 +126,69 @@
       "model": "gpt-5-mini"
     },
     "status": "submitted"
+  },
+  "batch_69a7f0ee966881908bb8e9b882da1b6c": {
+    "batch_id": "batch_69a7f0ee966881908bb8e9b882da1b6c",
+    "file_id": "file-AuDKdRTwVw64hYVUmiio5P",
+    "dataset_name": "BPA1",
+    "timestamp": "2026-03-04T08:44:30.504730",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "BPA1",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 7700,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a920cdb0248190a88fa23f5111f65c": {
+    "batch_id": "batch_69a920cdb0248190a88fa23f5111f65c",
+    "file_id": "file-7vbY6MmcXHVigbDZRrySSb",
+    "dataset_name": "BPA",
+    "timestamp": "2026-03-05T06:21:01.575942",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "BPA",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 7700,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a924bd7d68819081069e945704ce36": {
+    "batch_id": "batch_69a924bd7d68819081069e945704ce36",
+    "file_id": "file-Lo2k7e4Txf9szgTjJJ4noW",
+    "dataset_name": "MRC",
+    "timestamp": "2026-03-05T06:37:48.584201",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "MRC",
+      "title_col": "Title",
+      "abstract_col": "Fulltext",
+      "label_col": "label",
+      "num_records": 599,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
+  },
+  "batch_69a98bae4f0c81908feb07984cca943c": {
+    "batch_id": "batch_69a98bae4f0c81908feb07984cca943c",
+    "file_id": "file-TMbxF62qaLPdtWgNc5Yzmc",
+    "dataset_name": "BPA",
+    "timestamp": "2026-03-05T13:57:02.082293",
+    "model": "gpt-5-mini",
+    "managed_run_info": {
+      "dataset": "BPA",
+      "title_col": "title",
+      "abstract_col": "abstract",
+      "label_col": "label",
+      "num_records": 7700,
+      "model": "gpt-5-mini"
+    },
+    "status": "submitted"
   }
 }
